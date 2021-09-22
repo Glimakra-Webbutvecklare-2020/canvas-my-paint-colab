@@ -65,20 +65,6 @@ function init(e) {
 
 window.onload = init;
 ```
-
-## Step 2.3: Setup canvas context
-```js
-function init(e) {
-  // DONE: Setup Canvas 
-  const canvas = document.querySelector("#canvas");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  const ctx = canvas.getContext("2d");
-  ...
-```
-
-You need to access the element from the DOM and then ask for the 2d context to be able to paint on it. Also to resize it is the window size is a good idea.
-
 ## Step 2.3: Setup canvas context
 ```js
 function init(e) {
