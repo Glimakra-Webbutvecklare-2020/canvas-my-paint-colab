@@ -14,7 +14,7 @@ and together with the [canvas API](https://developer.mozilla.org/en-US/docs/Web/
 - The canvas will only resize during first load
 - A client connecting later will receive a state of the canvas to sync
 
-## Step 1: Inital project structure
+### Step 1: Inital project structure
 Here we follow [Anders first tutorial](https://github.com/andsju/Tutorial-Nodejs-WebSocket-Lab) and start of like this:
 
 ```js
@@ -23,7 +23,7 @@ Here we follow [Anders first tutorial](https://github.com/andsju/Tutorial-Nodejs
 |   └─ index.html
 ```
 
-# Step 2: Create a local paint application
+### Step 2: Create a local paint application
 Once this is complete we can create a local paint application
 
 **index.html -> Create a canvas in body**
@@ -49,7 +49,7 @@ canvas {
 
 You can also just steal `style.css` from this repo. Dont forget to link the stylesheet in head.
 
-# Step 2.2: Scaffold script.js for hold canvas logic
+## Step 2.2: Scaffold script.js for hold canvas logic
 ```js
 function init(e) {
   // TODO: Setup Canvas 
@@ -66,7 +66,7 @@ function init(e) {
 window.onload = init;
 ```
 
-# Step 2.3: Setup canvas context
+## Step 2.3: Setup canvas context
 ```js
 function init(e) {
   // DONE: Setup Canvas 
@@ -79,7 +79,7 @@ function init(e) {
 
 You need to access the element from the DOM and then ask for the 2d context to be able to paint on it. Also to resize it is the window size is a good idea.
 
-# Step 2.3: Setup canvas context
+## Step 2.3: Setup canvas context
 ```js
 function init(e) {
   // DONE: Setup Canvas 
@@ -94,7 +94,7 @@ You need to access the element from the DOM and then ask for the 2d context to b
 
 ![verify canvas context by logging it in console](docs/context-logging.png)
 
-## Step 2.4: Painting
+### Step 2.4: Painting
 ```js
 function init(e) {
   // DONE: Setup Canvas 
@@ -138,7 +138,7 @@ What is happening? Well what `ctx.fill(...)` is doing a connection with the star
 You should now be done with step 2. Take a break. Go outside or have a chat with your mum. She loves you.
 
 
-# Step 3: Get the server talking
+## Step 3: Get the server talking
 Assuming you have done [Anders nice tutorial](https://github.com/andsju/Tutorial-Nodejs-WebSocket-Lab). We know how the basics looks like.
 
 **server.mjs**
@@ -201,9 +201,11 @@ Try now to add a message return from the server to answer the client.
 **public/script.js**
 ```js
   function init(e) {
-    const websocket = new WebSocket('ws://localhost:8081');
 
     ...
+    // DONE: Setup websockets
+    const websocket = new WebSocket('ws://localhost:8081');
+
     // TODO: Handle socket events
     const handleSocketOpen = (e) => {
       console.log('Socket has been opened');
@@ -230,7 +232,7 @@ undefined
 Hello back from server!
 ```
 
-# Step 3: Give the server authority to paint
+## Step 3: Give the server authority to paint
 So until now we should have a working client paint app but it is working without anyone else collaborating with it. The server can receive and reply with messages. What we want to is to give *each client a unique color* and broadcast to *each client when they are painting*
 
 First we will pull the painting of a circle out from `paint()` in `public/script.js`. We will let the server know we want to draw and later hope for a response that triggers the actuall drawing. Let me show you:
@@ -302,7 +304,7 @@ Note that I am now passing stringified object to the server make is easier to se
 This solves the issue of having all client paint the same thing. Any client trying to draw something will first send a message to the server. The server then broadcasts it to all connected clients which in turn does the same painting dot on the same coordinates. 
 
 
-# Step 4: Give them colors
+## Step 4: Give them colors
 The last step I will show you is to have an inital message to request a color unique for the client. Here I must say I have done it unnessessarly complicated. One could simply have a predefined list with colors and pass a new one for each connection.
 
 I chose to create unique ids with the npm package `uuid` (installed via `npm i uuid`) and from these id string map it to a color. Why make it simple ey?
@@ -358,6 +360,7 @@ Now the server can send inital data for making a color and set an id (id does no
 ```js
 function init(e) {
   ...
+  // DONE: Handle socket events
   const handleSocketOpen = (e) => {
     console.log("Opening Socket...", e);
     console.log("Request init data from server");
@@ -390,6 +393,7 @@ We can let everyone else who are connected to the same canvas know our color by 
 ```js
 function init(e) {
   ...
+  // DONE: Handle painting
   const paint = (e) => {
     if (!isPainting) return;
     const args = { 
@@ -402,6 +406,7 @@ function init(e) {
     };
     websocket.send(JSON.stringify({ type: "paint", payload: args }));
   };
+```
 
 Finally we can use the color in our `paintDot(ctx, args)`
 **public/script.js**
