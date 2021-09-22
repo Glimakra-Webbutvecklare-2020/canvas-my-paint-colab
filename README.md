@@ -23,7 +23,7 @@ Here we follow [Anders first tutorial](https://github.com/andsju/Tutorial-Nodejs
 |   └─ index.html
 ```
 
-### Step 2: Create a local paint application
+### Step 2.1: Create a local paint application
 Once this is complete we can create a local paint application
 
 **index.html -> Create a canvas in body**
