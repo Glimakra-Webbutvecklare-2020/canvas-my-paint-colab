@@ -2,7 +2,7 @@
 
 This tutorial is going to build on the what we have learnt about websockets and canvas to create a simple collaborative paint canvas.
 
-![demo](demo.gif)
+![demo](docs/demo.gif)
 
 We will use WebSocket library [ws](https://github.com/websockets/ws)
 and together with the [canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) to draw on our canvas
@@ -68,11 +68,13 @@ window.onload = init;
 
 # Step 2.3: Setup canvas context
 ```js
+function init(e) {
   // DONE: Setup Canvas 
   const canvas = document.querySelector("#canvas");
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   const ctx = canvas.getContext("2d");
+  ...
 ```
 
 You need to access the element from the DOM and then ask for the 2d context to be able to paint on it. Also to resize it is the window size is a good idea.
@@ -198,7 +200,7 @@ Try now to add a message return from the server to answer the client.
 
 **public/script.js**
 ```js
-  function init() {
+  function init(e) {
     const websocket = new WebSocket('ws://localhost:8081');
 
     ...
@@ -235,7 +237,7 @@ First we will pull the painting of a circle out from `paint()` in `public/script
 
 **public/script.js**
 ```js
-function init() {
+function init(e) {
   ...
   const paint = (e) => {
     if (!isPainting) return;
@@ -269,7 +271,7 @@ function paintDot(ctx, args) {
   ctx.fill();
   ctx.beginPath();
 }
-window.onload = init();
+window.onload = init;
 ```
 
 **server.mjs**
@@ -354,7 +356,7 @@ Now the server can send inital data for making a color and set an id (id does no
 
 **public/script.js**
 ```js
-function init() {
+function init(e) {
   ...
   const handleSocketOpen = (e) => {
     console.log("Opening Socket...", e);
@@ -386,7 +388,7 @@ function init() {
 We can let everyone else who are connected to the same canvas know our color by modifing our `paint` function:
 **public/script.js**
 ```js
-function init() {
+function init(e) {
   ...
   const paint = (e) => {
     if (!isPainting) return;
@@ -401,7 +403,6 @@ function init() {
     websocket.send(JSON.stringify({ type: "paint", payload: args }));
   };
 
-
 Finally we can use the color in our `paintDot(ctx, args)`
 **public/script.js**
 ```js
@@ -412,3 +413,7 @@ function paintDot(ctx, args) {
   ctx.beginPath();
 }
 ```
+# Conclusion
+The last step of saving a state in server and send it when a client is connecting I will leave as an exersice. One can always look at the published code to see how I did it. This was my first tutorial guide I have written. Let me know how it went for you to recreate the example. Let me know if you find any mistakes. I am sure there are many. 
+
+Also if you have reflection on how I approach it please dont be afraid to contact me.
