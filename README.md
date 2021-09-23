@@ -1,4 +1,4 @@
-# My Collab Paint Walk through
+# TUTORIAL: Canvas My Paint Colab
 
 This tutorial is going to build on the what we have learnt about websockets and canvas to create a simple collaborative paint canvas.
 
