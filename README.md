@@ -326,13 +326,13 @@ const idToColor = (idStr) =>
     .join("")}`;
 
 wss.on("connection", (ws) => {
-    ws.id = uuid();
+    ws.id = uuidv4();
     ...
 
     // message event
     ws.on("message", (data) => {
     const message = JSON.parse(data);
-    log("Message received: ", message.type);
+    console.log("Message received: ", message.type);
     switch (message.type) {
       case "init":
         console.log("Attempting to send init data to client");
@@ -367,7 +367,7 @@ function init(e) {
 
   const handleSocketMessage = (e) => {
     const message = JSON.parse(e.data);
-    log(`Message incoming: ${message}`);
+    console.log(`Message incoming: ${message}`);
     switch (message.type) {
       case "init":
         const { id, color } = message.payload;
