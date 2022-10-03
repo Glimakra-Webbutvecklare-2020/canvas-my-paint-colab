@@ -10,7 +10,7 @@ and together with the [canvas API](https://developer.mozilla.org/en-US/docs/Web/
 ## Scope
 - This app will handle connections on the local machine. 
 - Each time a connection is made the server creates an user id and color for the client. 
-- The client can only make draw small circles with radius of 10.
+- The client can only make draw small circles with radius of 10.f
 - The canvas will only resize during first load
 - A client connecting later will receive a state of the canvas to sync
 
@@ -217,7 +217,7 @@ Running it now in dev tools console again should give back a response in like so
 const websocket = new WebSocket('ws://localhost:8081');
 websocket.onclose = (evt) => console.log("closing", evt);
 websocket.onopen = (evt) => console.log("open", evt);
-websocket.onmessage= (evt) => console.log("message", evt);
+websocket.onmessage= (evt) => console.log("message", evt.data);
 ```
 
 and then...
