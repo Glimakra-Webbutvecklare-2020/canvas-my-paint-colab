@@ -251,7 +251,7 @@ function init(e) {
   ...
   const handleSocketMessage = (e) => {
     const message = JSON.parse(e.data);
-    log(`Message incoming: ${message}`);
+    console.log(`Message incoming: ${message}`);
     switch (message.type) {
       case "paint":
         const args = message.payload;
@@ -279,11 +279,11 @@ window.onload = init;
   // message event
   ws.on("message", (data) => {
     const message = JSON.parse(data);
-    log("Message received: ", message.type);
+    console.log("Message received: ", message.type);
     switch (message.type) {
       case "paint":
         {
-          log("Broadcasting:", message);
+          console.log("Broadcasting:", message);
           wss.clients.forEach((client) => client.send(JSON.stringify(message)));
         }
         break;
