@@ -211,16 +211,16 @@ Try now to add a message return from the server to answer the client.
   });
 ```
 
-Running it now in dev tools console again should give back a response in like so:
+To verify that the server it responding correctly paste the follwing in the dev console:
 
 ```js
-const websocket = new WebSocket('ws://localhost:8081');
-websocket.onclose = (evt) => console.log("closing", evt);
-websocket.onopen = (evt) => console.log("open", evt);
-websocket.onmessage= (evt) => console.log("message", evt.data);
+const websocket = new WebSocket('ws://localhost:8081'); // Start connection
+websocket.onclose = (e) => console.log("closing", e); // Handle closing of connection
+websocket.onopen = (e) => console.log("open", e);   // Handle opening of connection
+websocket.onmessage= (e) => console.log("message", e.data); // handle incoming message
 ```
 
-and then...
+and then actuallt send a message to the server with your temporary websocket...
 
 ```js
 websocket.send("Hello from client!");
