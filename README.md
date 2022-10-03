@@ -211,16 +211,24 @@ Try now to add a message return from the server to answer the client.
   });
 ```
 
-Running it now again should give back a response in like so:
+Running it now in dev tools console again should give back a response in like so:
 
-```
+```js
 const websocket = new WebSocket('ws://localhost:8081');
+websocket.onclose = (evt) => console.log("closing", evt);
+websocket.onopen = (evt) => console.log("open", evt);
+websocket.onmessage= (evt) => console.log("message", evt);
+```
+
+and then...
+
+```js
 websocket.send("Hello from client!");
 undefined
 Hello back from server!
 ```
 
-## Step 3: Give the server authority to paint
+## Step 3.1: Give the server authority to paint
 So until now we should have a working client paint app but it is working without anyone else collaborating with it. The server can receive and reply with messages. What we want to is to give *each client a unique color* and broadcast to *each client when they are painting*
 
 First we will pull the painting of a circle out from `paint()` in `public/script.js`. We will let the server know we want to draw and later hope for a response that triggers the actuall drawing. Let me show you:
