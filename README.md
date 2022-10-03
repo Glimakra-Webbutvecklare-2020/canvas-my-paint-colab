@@ -18,11 +18,12 @@ and together with the [canvas API](https://developer.mozilla.org/en-US/docs/Web/
 Here we follow [Anders first tutorial](https://github.com/andsju/Tutorial-Nodejs-WebSocket-Lab) and start of like this:
 
 ```js
-| ─ server.mjs
+| - package.json // created with `npm init -y`
+| ─ server.mjs.  // can be called server.js, but modify package.json to have `type: "module"`
 | ─ public
 |   └─ index.html
 ```
-if you name your server `server.js` make sure that packagekj.json has the property `type: "module"`
+if you name your server `server.js` make sure that `package.json` has the property `type: "module"`. If you dont have a package.json file use `npm init -y` to create one.
 
 ### Step 2.1: Create a local paint application
 Once this is complete we can create a local paint application
