@@ -159,12 +159,14 @@ Verify that everything works by starting the server `node server.mjs` and then s
 
 **Browser Dev Tools Console**
 ```js
-const websocket = new WebSocket('ws://localhost:8081');
+const websocket = new WebSocket('ws://localhost:8081'); // make sure port number is matching
+```
+and then ...
+```js
 websocket.send("Hello from client!");
-undefined
 ```
 
-and in the terminal of the node server:
+and in the terminal of the node server you should now see:
 **Node server Terminal**
 ```js
 Client connected from IP ::ffff:127.0.0.1
