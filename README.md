@@ -22,6 +22,7 @@ Here we follow [Anders first tutorial](https://github.com/andsju/Tutorial-Nodejs
 | ─ public
 |   └─ index.html
 ```
+if you name your server `server.js` make sure that packagekj.json has the property `type: "module"`
 
 ### Step 2.1: Create a local paint application
 Once this is complete we can create a local paint application
@@ -158,7 +159,7 @@ Verify that everything works by starting the server `node server.mjs` and then s
 **Browser Dev Tools Console**
 ```js
 const websocket = new WebSocket('ws://localhost:8081');
-websocket.send("Hello from client!"}));
+websocket.send("Hello from client!");
 undefined
 ```
 
@@ -213,7 +214,7 @@ Running it now again should give back a response in like so:
 
 ```
 const websocket = new WebSocket('ws://localhost:8081');
-websocket.send("Hello from client!"}));
+websocket.send("Hello from client!");
 undefined
 Hello back from server!
 ```
