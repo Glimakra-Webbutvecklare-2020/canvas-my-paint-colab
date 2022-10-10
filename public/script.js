@@ -45,7 +45,7 @@ function init(e) {
 
   const handleSocketMessage = (e) => {
     const message = JSON.parse(e.data);
-    log(`Message incoming: ${message}`);
+    log(`Message incoming: ${JSON.stringify(message)}`);
     switch (message.type) {
       case "init":
         const { id, color, state } = message.payload;

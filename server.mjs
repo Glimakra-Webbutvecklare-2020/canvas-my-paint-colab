@@ -7,8 +7,7 @@ const wss = new WebSocketServer({ port: 8081 });
 
 // Create state of canvas
 const state = [];
-const log = (message) => console.log(`[SERVER] ${message}`);
-
+const log = (message) => console.log(`[SERVER] ${message}`); 
 // Id split to array of chars
 // then string pick first 6 chars
 // then coverted to integers ranging from 0-15
@@ -43,7 +42,7 @@ wss.on("connection", (ws) => {
   // message event
   ws.on("message", (data) => {
     const message = JSON.parse(data);
-    log("Message received: ", message.type);
+    log(`Message received: ${data}`);
     switch (message.type) {
       case "init":
         {
@@ -57,7 +56,7 @@ wss.on("connection", (ws) => {
         break;
       case "paint":
         {
-          log("Broadcasting:", message);
+          log(`Broadcasting: ${JSON.stringify(message)}`);
           state.push(message);
           wss.broadcast(message);
         }
@@ -72,5 +71,6 @@ wss.on("connection", (ws) => {
 const app = express();
 app.use(express.static("public"));
 
+app.get('/', (req,res) => res.send('public/index.html'));
 const port = 3000;
 app.listen(port, () => console.log(`Listening on port ${port}, websocket port: ${8081}`))
