@@ -1,5 +1,6 @@
 import { WebSocketServer } from "ws";
 import { v4 as uuidv4 } from "uuid";
+import express from "express";
 
 // create WebSocket server
 const wss = new WebSocketServer({ port: 8081 });
@@ -67,3 +68,9 @@ wss.on("connection", (ws) => {
     }
   });
 });
+
+const app = express();
+app.use(express.static("public"));
+
+const port = 3000;
+app.listen(port, () => console.log(`Listening on port ${port}, websocket port: ${8081}`))
