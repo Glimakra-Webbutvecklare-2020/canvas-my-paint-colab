@@ -5,12 +5,14 @@ import express from "express";
 // create WebSocket server
 const websocketServer = new WebSocketServer({ noServer: true});
 const app = express();
-app.use(express.static("public"));
-
+app.use(express.static("public"))
 const port = 3000;
 const expressServer = app.listen(port, () => console.log(`Listening on port ${port}`))
+
 expressServer.on("upgrade", (request, socket, head) => {
+    console.log("updrading...");
     websocketServer.handleUpgrade(request, socket, head, (websocket) => {
+	console.log("handling upgrade");
       websocketServer.emit("connection", websocket, request);
     });
   });
