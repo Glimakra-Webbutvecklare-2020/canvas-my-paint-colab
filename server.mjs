@@ -3,7 +3,17 @@ import { v4 as uuidv4 } from "uuid";
 import express from "express";
 
 // create WebSocket server
-const wss = new WebSocketServer({ port: 8081 });
+const websocketServer = new WebSocketServer({ noServer: true});
+const app = express();
+app.use(express.static("public"));
+
+const port = 3000;
+const expressServer = app.listen(port, () => console.log(`Listening on port ${port}`))
+expressServer.on("upgrade", (request, socket, head) => {
+    websocketServer.handleUpgrade(request, socket, head, (websocket) => {
+      websocketServer.emit("connection", websocket, request);
+    });
+  });
 
 // Create state of canvas
 const state = [];
@@ -21,15 +31,15 @@ const idToColor = (idStr) =>
     .map((i) => i.toString(16))
     .join("")}`;
 
-wss.broadcast = function broadcast(message) {
-  wss.clients.forEach((client) => client.send(JSON.stringify(message)));
+websocketServer.broadcast = function broadcast(message) {
+  websocketServer.clients.forEach((client) => client.send(JSON.stringify(message)));
 };
 
-// listen to WebSocket server (wss) connections
-wss.on("connection", (ws) => {
+// listen to WebSocket server (websocketServer) connections
+websocketServer.on("connection", (ws) => {
   ws.id = uuidv4();
   log(`Client connected from IP ${ws._socket.remoteAddress} with ID: ${ws.id}`);
-  log(`Number of connected clients: ${wss.clients.size}`);
+  log(`Number of connected clients: ${websocketServer.clients.size}`);
 
   // WebSocket events (ws) for a single client
   // --------------------
@@ -58,7 +68,7 @@ wss.on("connection", (ws) => {
         {
           log(`Broadcasting: ${JSON.stringify(message)}`);
           state.push(message);
-          wss.broadcast(message);
+          websocketServer.broadcast(message);
         }
         break;
       default: {
@@ -68,9 +78,3 @@ wss.on("connection", (ws) => {
   });
 });
 
-const app = express();
-app.use(express.static("public"));
-
-app.get('/', (req,res) => res.send('public/index.html'));
-const port = 3000;
-app.listen(port, () => console.log(`Listening on port ${port}, websocket port: ${8081}`))

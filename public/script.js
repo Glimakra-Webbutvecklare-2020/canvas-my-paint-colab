@@ -1,7 +1,7 @@
 const log = (message) => console.log(`[CLIENT] ${message}`);
 
 function init(e) {
-  const websocket = new WebSocket("ws://localhost:8081");
+  const websocket = new WebSocket("ws://localhost:3000");
   const canvas = document.querySelector("#canvas");
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
