@@ -4,8 +4,7 @@ const trimSlashes = str => str.split('/').filter(v => v !== '').join('/');
 function init(e) {
   const baseURL = trimSlashes(window.location.href.split("//")[1]);
   const protocol = 'wss';
-  const port = 3000;
-  const websocket = new WebSocket(`${protocol}://${baseURL}:${port}`);
+  const websocket = new WebSocket(`${protocol}://${baseURL}`);
   const canvas = document.querySelector("#canvas");
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
