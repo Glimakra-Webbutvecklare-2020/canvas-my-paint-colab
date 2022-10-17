@@ -1,7 +1,11 @@
 const log = (message) => console.log(`[CLIENT] ${message}`);
+const trimSlashes = str => str.split('/').filter(v => v !== '').join('/');
 
 function init(e) {
-  const websocket = new WebSocket(`ws://${window.location.href.split("//")[1]}:3000`);
+  const baseURL = trimSlashes(window.location.href.split("//")[1]);
+  const protocol = 'wss';
+  const port = 3000;
+  const websocket = new WebSocket(`${protocol}://${baseURL}:${port}`);
   const canvas = document.querySelector("#canvas");
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
